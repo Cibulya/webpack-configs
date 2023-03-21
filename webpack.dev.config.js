@@ -1,7 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.js'),
@@ -26,8 +25,8 @@ module.exports = {
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|svg|webp|mp3)$/i,
         type: 'asset/resource',
-        use: {
-          loader: 'file-loader',
+        generator: {
+          filename: 'assets/pics/[contenthash][ext]',
         },
       },
       {
@@ -55,9 +54,6 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src', 'index.html'),
-    }),
-    new CopyPlugin({
-      patterns: [{ from: './src/pics', to: 'pics' }],
     }),
   ],
 };
